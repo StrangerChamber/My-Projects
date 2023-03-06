@@ -1,0 +1,137 @@
+Programming Assignment Two - HTTP Web Server
+Introduction 
+In this assignment, you will create a TCP based web server, in C, that handles multiple simultaneous requests from users.  A web server is a program that receives requests from a client program and then sends a result back to the client in response.  The client is usually a web browser like Google Chrome or Firefox.
+
+ 
+
+HTTP Request
+The HTTP request consists of three substrings – request method, request URL, and request version.  All three parts should be separated by one or more white spaces.  The request method should be capital letters like “GET”, “HEAD”, and “POST”.  The request URL is a set of words which are case insensitive and separated by “/” and the server should treat the URL as a relative path of the current document root directory.  The request version follows a rule like “HTTP/x.y” where x and y are numbers. 
+
+If you type a URL like http://www.w3.org/Protocols/rfc1945/rfc1945 in a web browser, the web browser will send an HTTP GET command to the server http://www.w3.org/ after establishing a TCP connection with port 80 on the server. In this scenario, the format for the HTTP GET command received at the web server is as follows:
+
+GET /Protocols/rfc1945/rfc1945 HTTP/1.1
+Based on these rules, we can identify the three substrings:
+
+Request Method: GET
+
+Request URI: /Protocols/rfc1945/rfc1945
+
+Request Version: HTTP/1.1
+ 
+
+ 
+
+HTTP Response
+All responses must include one or more response headers, starting with a status code:
+
+Sample Response Header
+
+HTTP/1.1 200 OK
+Content-Type: <> # Tells about the type of content and the formatting of <file contents> 
+Content-Length:<> # Numeric value of the number of bytes of <file contents>
+<file contents>
+The Status Code indicates whether the request succeeded or failed, or some other administrative issue applies (like redirection).  A status code of 200 indicates that the requested file exists and the server is going to send the requested file back to the client.  A complete list of HTTP status codes can be found here.
+
+The Content-Type header tells the client what format the file contents will be in and the Content-Length header indicates how many bytes will be transferred for the file.  The following content types are to be supported in your server:   
+
+.html
+text/html
+.txt
+text/plain
+.png 
+image/png
+.gif
+image/gif
+.jpg
+image/jpg
+.css 
+text/css
+.js
+application/javascript
+Additionally, you'll need to make sure each of your response headers is delimited by a terminating CRLF (carriage return/linefeed), sometimes written as \r\n.  The file content should be separated by an additional new line (meaning that you have to separate the last header and your file content by “\r\n\r\n”).
+
+ 
+
+The Web Server
+The server must take one command line argument: a port number for the server to use:
+
+./server 8888 # Running your server with a port # of 8888
+Your server should run in an infinite loop once it has started. You are expected to exit out of the server gracefully when pressing Ctrl + C.
+
+The web server will define a Document Root which is the base directory where all of the various files to be served reside.  When the web-server receives an HTTP request from a client for a particular file, it should open the file in relation to this document root and then send the file back to the client with proper header information.  This document root directory should be in the sub directory /www from where your webserver program runs. 
+
+If the requested URL is a directory (ie: GET / HTTP/1.1 or GET /inside/ HTTP/1.1), the web server should attempt to find a default page named index.html or index.htm in the requested directory. 
+
+If the client sends a HTTP/1.0 request, the server must respond back with a HTTP/1.0 protocol in its reply.  Similarly for the HTTP/1.1 protocol.
+
+ 
+
+Handling Multiple Connections
+When a client receives a web page that contains a lot of embedded elements, it will repeatedly generate an HTTP GET for each element in the page.  As such, the server should be capable of serving multiple requests simultaneously.  This can be done using select(), fork(), or pthread_create() with the following approaches:
+
+A multi-threaded implementation that creates a new thread for each incoming connection. That is, once the server accepts a connection, it will spawn a thread to parse the request, transmit the file, etc.  Alternatively, you can pre-spawn threads and keep them in a thread pool for future use.
+
+A multi-process implementation that spawns a new child process to service a request.  Similar to above, you can spawn a worker pool of active processes to hand requests off to from the main server process.
+
+ 
+
+Error Handling
+When the HTTP request results in an error then the web-server should respond to the client with an appropriate status code.  Your server should support the following status codes:
+
+200 OK
+The request is valid
+400 Bad Request
+The request could not be parsed or is malformed
+403 Forbidden
+The requested file can not be accessed due to a file permission issue
+404 Not Found
+The requested file can not be found in the document tree
+405 Method Not Allowed
+A method other than GET was requested
+505 HTTP Version Not Supported
+An HTTP version other than 1.0 or 1.1 was requested
+ 
+
+ 
+
+Extra Credit - Persistent connections and pipelining of client requests (10 points)
+Add logic to your web server to determine when it will close a persistent connection.  That is, after the results of a single request are returned (e.g., index.html), the server will leave the connection open for some period of time, allowing the client to reuse the existing socket to make subsequent requests. You can use 10 seconds for this timeout value.
+
+The server must send its responses to these requests in the same order that the requests were received.  If the client includes a Connection: Keep-alive header in the request, then the server will keep that socket connection open until the timeout expires.  If any subsequent requests arrive on that socket before the timeout period (essentially pipelined requests), the server should reset the timeout period.  A keepalive request looks like the following: 
+
+GET /index.html HTTP/1.1
+Host: localhost
+Connection: Keep-alive
+And the response to this request should be something like this:
+
+HTTP/1.1 200 OK
+Content-Type: <>
+Content-Length: <>
+Connection: Keep-alive
+<file contents>
+ 
+
+If there is no Connection: Keep-alive in the request, the server must close the socket upon responding and reply with a Connection: Close header.  If there is a Connection: close header in the request, the server should again close the socket upon responding and include a Connection: Close in the response header.
+
+ 
+
+ 
+
+Testing Your Web Server
+You can use a web browser like Firefox or netcat to test your implementation.
+
+ 
+
+Submission Requirements
+Please submit your code as either individual .c and .h files or as a plain .tar file (not .tgz or .zip)
+Your code should serve all the file formats in the provided document root directory, www.tar or www.zip
+Support for simultaneous requests should include two or more clients accessing the server at the same time
+The usage of any libraries that implement an HTTP server is explicitly not allowed
+ 
+
+Helpful Links
+http://www.cs.dartmouth.edu/~campbell/cs50/socketprogramming.html (Links to an external site.) : Socket Programming - TCP echo client and server with fork()
+http://www.binarytides.com/server-client-example-c-sockets-linux/ : TCP echo client and server with threads
+http://www.csc.villanova.edu/~mdamian/sockets/echoC.htm : Echo server-client code with threads
+https://www.youtube.com/watch?v=eVYsIolL2gE
+: Basics of socket programming
