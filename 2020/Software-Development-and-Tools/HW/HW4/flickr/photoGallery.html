@@ -1,0 +1,94 @@
+<html>
+<head>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>   
+        <style>
+        body {
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        .topnav {
+          overflow: hidden;
+          background-color: #333;
+        }
+        
+        .topnav a {
+          float: left;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
+        }
+        
+        .topnav a:hover {
+          background-color: #ddd;
+          color: black;
+        }
+        
+        .topnav a.active {
+          background-color: #4CAF50;
+          color: white;
+        }
+        .footer{
+          background-color: grey;
+        }
+    
+        </style>
+<script src="./Linking.js"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="mypage_bootstrap.html">Home</a>
+                </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="../signup-modal/login.html">Sign Up Modal</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="../tic-tac-toe/tic-tac-toe.html">Tic-Tac-Toe</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="./photoGallery.html">Flickr Gallery</a>
+                      </li>
+            </ul>
+        </div>
+        <div class="mx-auto order-0">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+            </ul>
+        </div>
+    </nav>
+  
+
+<h1>Flickr Query </h1>
+<form id="form" >
+    <label for="amount">Select amount of images you want per page</label>
+    <select id="amount">
+        <option value="30">30</option>
+        <option value="50">50</option>
+        <option value="70">70</option>
+  <label for="txtInput">Input:</label>
+  <input id="txtInput" type="text" />
+  <button type="submit">Submit</button>
+  <hr />
+</form>
+
+<div id = "photos"></div>
+
+</body>
+
+</html>
+
+
