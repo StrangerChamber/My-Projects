@@ -1,0 +1,11 @@
+C-Program: It took me around 20 minutes total to complete this code, read through the pdf, and debug my code. Overall, very smooth and nothing new in this phase. 
+
+Value Returned by my program is: 16801
+
+Assembly: This phase took the bulk of work for me overall probably 3 hours put in. It wasn't neccessarily to complicated it just took me a long time to get my mind organized around the problem, and then making sure the instructions were doing what I wanted. The debugger wasn't giving me register values for a little while so I was unable to debug for a time but after a reset of codasip I was able to successfully follow my register values and confirm my program solution was correct. This was the most difficult of the phases but overall not too challenging.
+
+Value Returned is: 16801
+
+Machine Code: This was very simple because it was just turning the assembly into bit strings using my reference tables. It took about 30 minutes to get them all done, very easy overall.
+
+Summary: The c-program simplifies the assembly very much so. The time saved is huge if you can abstract away the details. Comparing assembly to machine code brings the same speed increase, it's a huge improvement to have an instruction set instead of bit strings. Going from C to machine code is very different, if I had to code in machine code you would go at an unacceptable rate. The abstraction of details is a huge advancement in software development. 
