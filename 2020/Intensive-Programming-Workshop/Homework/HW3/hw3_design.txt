@@ -1,0 +1,78 @@
+Jack Blacburn
+
+
+
+need all classes
+    their methods
+    what methods the methods will call
+    data members
+
+psuedocode for main:
+
+first the user will input what kind of election they want to simulate: direct or representative
+next we register candidates
+then candidates will campaign
+then the election calls for votes
+votes are counted
+winner announced
+restart or quit
+
+
+
+Classes:
+    TEXTUI class: prints info per route chosen
+        public:
+            TEXTUI()-will print welcome message and ask user to input what kind of election they want
+            Direct()- direct route will print what's needed for direct election process
+            Rep()- rep route messages
+        
+        private:
+        BOOL direct - if true we do direct path if false rep route
+
+    Party enum class: holds candidate party info
+        public: 
+            Party()- setup enum to hold variable number of parties
+            viewParty(candidate c)- tells what party a candidate is
+            setParty(string party)- calls certain candidate struct and sets party to whatever is input
+        private:
+            map<candidate, string> partys- keeps track of each candidate and their party
+
+    Candidate struct:
+        name- their name
+        party-their party
+        id - ascending ids according to theorder in which they are registered
+
+    Election class: manages the election process
+        Election()- initialize new election
+        register(candidate c)- adds a candidate to the election
+        campaign(candidate c)- tells which districts the candidate to go campaign in
+        vote()- calls for votes
+        countVotes()- counts all votes
+        private:
+            map<candidate, district> candidates- holds list of all candidates in the election    
+
+
+    representative election class: child class of election
+        countDistricts()- this method will determine which candidates win which districts
+
+        private:
+            map<candidate, int> wins- keeps tally of how many districts each candidate has won
+
+    district class;
+        district()-creates a new district
+        affiliantCount()- counts many constituents are affiliated with each Party
+        change()- determines how many people flip parties
+        size()- determines the size of each district
+
+        private:
+            int size-size of district
+            map<party, int> count- count of constituents for each party
+
+
+    ElectoralMap class(singleton):
+        
+        votes()- sends the amount of votes per district to election
+        private:
+            ElectoralMap()- initialize amount of districts in the election
+            int numofDistricts
+            map<district, int> Electoralmap- keeps all districts and their num of votes in this map
