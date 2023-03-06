@@ -1,0 +1,13 @@
+https://csci-3308-movies.herokuapp.com/
+
+
+Jack Blackburn
+
+Wasn't able to deploy correctly on heroku, had plenty of issues with it I worked through
+but every solved issue brought out five more new issues so I'm just gonna call it here
+and take what I get. I got it working well on the front end locally, didn't get
+the DB set up right and was still a little confused with my get and post requests but
+had I had a few more days I believe I could've implemented the complete application.
+
+Great class I learned a lot about web development and leave with much more knowledge
+that I came in with :)
