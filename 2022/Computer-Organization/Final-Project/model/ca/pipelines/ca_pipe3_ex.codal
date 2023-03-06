@@ -1,0 +1,345 @@
+/**
+ * Codasip s.r.o.
+ *
+ * CONFIDENTIAL
+ *
+ * Copyright 2022 Codasip s.r.o.
+ *
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained in this file, is and shall remain the property of
+ * Codasip s.r.o. and its suppliers, if any.
+ *
+ * The intellectual and technical concepts contained herein are confidential and proprietary to
+ * Codasip s.r.o. and are protected by trade secret and copyright law.  In addition, elements of the
+ * technical concepts may be patent pending.
+ *
+ * This file is part of the Codasip Studio product. No part of the Studio product, including this
+ * file, may be use, copied, modified, or distributed except in accordance with the terms contained
+ * in Codasip license agreement under which you obtained this file.
+ *
+ *  \file   ca_pipe3_ex.codal
+ *  \author Codasip
+ *  \date   09.02.2022
+ *  \brief  cycle accurate model
+ */
+
+#include "ca_defines.hcodal"
+#include "debug.hcodal"
+
+
+// -------------------------------------------------------------------------------------------------
+// Execute Stage
+// -------------------------------------------------------------------------------------------------
+event ex : pipeline(pipe.EX)
+{
+    use alu_operate;
+    use memory_operation;
+    use ex_output;
+
+    semantics
+    {
+        //CONTROL LOGIC for first round of muxes before the ALU
+
+        if((r_ex_rd == r_id_rs1) && (r_ex_rd!=0) && r_ex_regwrite == true){
+            s_ex_fwd1 = DHF_ME;
+            
+        }else if((r_mem_rd == r_id_rs1) && (r_mem_rd!=0) && r_mem_regwrite == true){
+            s_ex_fwd1 = DHF_WB;
+           
+        }else{
+            s_ex_fwd1 = DHF_REG;
+        }
+        if((r_ex_rd == r_id_rs2) && (r_ex_rd!=0) && r_ex_regwrite == true){
+            s_ex_fwd2 = DHF_ME;
+           
+        }else if((r_mem_rd == r_id_rs2) && (r_mem_rd!=0) && r_mem_regwrite == true){
+            s_ex_fwd2 = DHF_WB;
+           
+        }else{
+            s_ex_fwd2 = DHF_REG;
+            
+        }
+        
+        //mux1 for alu input choices
+
+        switch(s_ex_fwd1){
+            case DHF_REG:
+                s_ex_fwd1_val = r_id_rf_src1;
+                break;
+            case DHF_ME:
+                s_ex_fwd1_val = r_ex_alu_result;
+                break;
+            case DHF_WB:
+                s_ex_fwd1_val = s_wb_memread_result;
+                break;
+            default:
+                s_ex_fwd1_val = r_id_rf_src1;
+                break;
+        }
+
+        //mux2 
+
+        switch(s_ex_fwd2){
+            case DHF_REG:
+                s_ex_fwd2_val = r_id_rf_src2;
+                break;
+            case DHF_ME:
+                s_ex_fwd2_val = r_ex_alu_result;
+                break;
+            case DHF_WB:
+                s_ex_fwd2_val = r_mem_data_result;
+                break;
+            default:
+                s_ex_fwd2_val = r_id_rf_src2;
+                break;
+        }
+        
+
+        s_ex_target_address1 = r_id_pc+r_id_src2_imm;
+        s_ex_pcplus4 = r_id_pc+4;
+        
+        
+        //src1 select mux
+        switch (r_id_src1_sl) {
+            case ALU_SRC1_SEL_RF:
+                s_src1_operand = s_ex_fwd1_val;
+                break;
+            case ALU_SRC1_SEL_ZERO: //for LUI
+                s_src1_operand = 0;
+                break;
+            case ALU_SRC1_SEL_PC: //FOR AUIPC
+                s_src1_operand = r_id_pc;
+                break;
+            default: 
+                s_src1_operand = s_ex_fwd1_val;
+                break;
+        }
+
+        
+
+        //src2 select mux
+        switch (r_id_src2_sl){
+             case  ALU_SRC2_SEL_RF:
+                s_src2_operand = s_ex_fwd2_val;
+                break;
+             case ALU_SRC2_SEL_IMM:
+                s_src2_operand = r_id_src2_imm;
+                break;
+                default:
+                s_src2_operand = 0;
+                break;
+        }
+
+        // HALT instruction detection used for simulation purposes until the load/store instructions
+        // have been implemented
+        if (r_id_halt == true)
+        {
+            codasip_info(INFO_GENERAL, "Halt instruction indicated");
+//            codasip_store_exit_code(rf_xpr[GPR_RETVAL] & 0xFF);
+            #pragma simulator
+            {
+                codasip_halt();
+            }
+
+        }
+
+        // If not a halt operation, call ALU routine
+        alu_operate();
+
+        //ADDED IN PHASE 8 FOR STORES AND LOADS
+        memory_operation();
+
+
+        // Update the pipeline registers between the Execute (EX) and MEMORY (MEM) stages
+        ex_output();
+    };
+};
+
+event alu_operate : pipeline(pipe.EX)
+{
+    semantics
+    {
+        
+        switch(r_id_aluop){
+            case ALU_NOP:
+                s_ex_alu_result = 0;
+                break;
+            case ALU_ADD:
+                s_ex_alu_result = s_src1_operand+s_src2_operand;
+                break;
+            case ALU_SLTI:
+                    s_ex_alu_result = ((int32)s_src1_operand < (int32)s_src2_operand) ? true : false;
+                break;
+            case ALU_SLT:
+                    s_ex_alu_result = ((int32)s_src1_operand < (int32)s_src2_operand) ? true : false;
+                break;
+            case ALU_SLTU:
+                    s_ex_alu_result = ((uint32)s_src1_operand < (uint32)s_src2_operand) ? true : false;
+                break;
+            case ALU_SLTIU:
+                    s_ex_alu_result = ((uint32)s_src1_operand < (uint32)s_src2_operand) ? true : false;
+                break;
+            case ALU_XORI:
+                    s_ex_alu_result = (s_src1_operand ^ s_src2_operand);
+                break;
+             case ALU_XOR:
+                    s_ex_alu_result = (s_src1_operand ^ s_src2_operand);
+                break;
+            case ALU_ORI:
+                    s_ex_alu_result = (s_src1_operand | s_src2_operand);
+                break;
+            case ALU_ANDI:
+                    s_ex_alu_result = (s_src1_operand & s_src2_operand);
+                break;
+            case ALU_AND:
+                    s_ex_alu_result = (s_src1_operand & s_src2_operand);
+                break;
+            case ALU_OR:
+                    s_ex_alu_result = (s_src1_operand | s_src2_operand);
+                break;
+            case ALU_SUB:
+                    s_ex_alu_result = (s_src1_operand - s_src2_operand);
+                    break;
+            case ALU_SLL:
+                    s_ex_alu_result = ((int32)s_src1_operand << (int5)s_src2_operand);
+                    break;
+            case ALU_SLLI:
+                    s_ex_alu_result = ((uint32)s_src1_operand << (uint5)s_src2_operand);
+                    break;
+            case ALU_SRL:
+                    s_ex_alu_result = ((int32)s_src1_operand >> (int5)s_src2_operand);
+                    break;
+            case ALU_SRLI:
+                    s_ex_alu_result = ((uint32)s_src1_operand >> (uint5)s_src2_operand);
+                    break;
+            case ALU_SRA:
+                    s_ex_alu_result = ((int32)s_src1_operand >> (int5)s_src2_operand);
+                    break;
+            default:
+                s_ex_alu_result = 0;
+                break;
+        }
+
+        //set s_ex_zero = 1 when alu result is 0
+        if(s_ex_alu_result == 0){
+            s_ex_zero = 1;
+        }else{
+            s_ex_zero = 0;
+        }
+
+        //jump logic
+        switch(r_id_jump_inst){
+            case BRADD_ADDR:
+                s_ex_target_address2 = s_ex_target_address1;
+                break;
+            case BRADD_ALU:
+                s_ex_target_address2 = s_ex_alu_result;
+                break;
+            default:
+                s_ex_target_address2 = s_ex_target_address1;
+                break;
+        }
+
+        //determine whether to use alu result or pcplus4 
+        switch(r_id_rfwsel){
+            case WB_ALU:
+                s_ex_alu_mux_result = s_ex_alu_result;
+                break;
+            case WB_PC:
+                s_ex_alu_mux_result = s_ex_pcplus4;
+                break;
+            default:
+                s_ex_alu_mux_result = s_ex_alu_result;
+                break;
+        }
+
+
+
+    };
+};
+
+event memory_operation : pipeline(pipe.EX)
+{
+    semantics
+    {
+        uint1 op_rw;  //Is it a load, store, or idle (no memory request) operation
+        uint2 op_type; //Is the memory request idle, burst, or non-sequential
+
+
+        //GOT THESE ASSIGNMENTS STRAIGHT FROM THE WRITEUP
+        switch(r_id_mem_ops){
+            case MEM_LB:
+                op_rw = CP_AHB_READ;
+                op_type = CP_AHB_NONSEQ;
+                s_ex_mem_size = CP_AHB_SIZE_8;
+                break;
+            case MEM_LH:
+                op_rw = CP_AHB_READ;
+                op_type = CP_AHB_NONSEQ;
+                s_ex_mem_size = CP_AHB_SIZE_16;
+                break;
+            case MEM_LW:
+                op_rw = CP_AHB_READ;
+                op_type = CP_AHB_NONSEQ;
+                s_ex_mem_size = CP_AHB_SIZE_32;
+                break;
+            case MEM_LBU:
+                op_rw = CP_AHB_READ;
+                op_type = CP_AHB_NONSEQ;
+                s_ex_mem_size = CP_AHB_SIZE_8;
+                break;
+            case MEM_LHU:
+                op_rw = CP_AHB_READ;
+                op_type = CP_AHB_NONSEQ;
+                s_ex_mem_size = CP_AHB_SIZE_16;
+                break;
+            case MEM_SB:
+                op_rw = CP_AHB_WRITE;
+                op_type = CP_AHB_NONSEQ;
+                s_ex_mem_size = CP_AHB_SIZE_8;
+                break;
+            case MEM_SH:
+                op_rw = CP_AHB_WRITE;
+                op_type = CP_AHB_NONSEQ;
+                s_ex_mem_size = CP_AHB_SIZE_16;
+                break;
+            case MEM_SW:
+                op_rw = CP_AHB_WRITE;
+                op_type = CP_AHB_NONSEQ;
+                s_ex_mem_size = CP_AHB_SIZE_32;
+                break;
+            default:
+                op_rw = DONT_CARE;
+                op_type = CP_AHB_IDLE;
+                s_ex_mem_size = CP_AHB_SIZE_32;
+                break;
+        }
+
+        //unsure about these assignments
+        ldst.transport(CP_PHS_ADDRESS, op_type, op_rw, s_ex_alu_result, s_ex_mem_size);
+
+        s_ex_encode_data = ldst.encode_data(s_ex_fwd2_val ,s_ex_alu_result, s_ex_mem_size);
+
+    };
+};
+
+event ex_output : pipeline(pipe.EX)
+{
+    semantics
+    {
+        r_ex_alu_result = s_ex_alu_mux_result; 
+        r_ex_rd     = r_id_rd;
+        r_ex_regwrite   = r_id_regwrite; 
+        r_ex_memdat = s_ex_encode_data;
+        r_ex_mem_size = s_ex_mem_size;
+        r_ex_zero = s_ex_zero;
+        r_ex_target_address = s_ex_target_address2;
+        r_ex_branchop = r_id_branchop;
+        r_ex_branch_inst = r_id_branch_inst;
+        r_ex_jump_inst = r_id_jump_inst;
+        r_ex_mem_ops = r_id_mem_ops;
+        r_ex_memread = r_id_memread;
+    };
+};
+
