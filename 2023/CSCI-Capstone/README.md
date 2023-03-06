@@ -1,0 +1,3 @@
+CSCI 4308 - Software Engineering Project
+
+In this course we chose a company to partner with and the company gave us a yearlong project to work on. Currently still in the process of completing the project. We partnered with Energyhub, a company working to optimize energy output of in home smart devices, such as thermostats and electric vehicle chargers. Our project involves creating an EV charging scheduler optimizing carbon dioxide output from the power plants generating the energy. We are creating a customer dashboard wherein they enter their location and a window when they want to charge their EV, then we estimate the best time to charge the vehicle based on historical carbon output data for the region. Used streamlit and github pages to develop the user dashboard. 
