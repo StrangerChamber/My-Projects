@@ -1,0 +1,59 @@
+Jack Blackburn
+ethical hacking fall 2022
+homework 2 writeup
+worked solo with with assistance from a grad student Bashayer Alharbi who works in my research lab 
+
+Level 1:
+
+So for this level there was a misconfiguration in the etc/group file I stumbled upon. The file contains information on groups, their users, group id, as well as passwords for the group. However, the file usually puts an x in the password field so no one has access to them, but in this case there was amd5 hash instead of an x in the password field for group lev1. So, if I could crack the hash I could use the password to join the group and defeat level1. So, I used hashcat and a predownloaded wordlist to crack the hash yielding, "security", as level1's group password. So I simply ran newgrp lev1 on the command line, it prompted me for a password, I entered security, thus adding me to the group temporarily, and finally I ran l33t to add me permanently to the group. Thus completing level1. 
+
+
+Level 2:
+
+Now that I had group lev1 permissions I could now access the level1 directory, and within that directory we had a compiled c executable with the setgid bit set to run the executable with lev2 permissions. So, if I can manipulate this file to execute l33t with lev2 permissions I can defeat level2. There was also the uncompiled source code of the executable for which I had read access. So, I stated examining this file for potential ways to get it to run l33t. The file looks for a file called .secret in the home directory using a non explicit path, hashes the contents of the file, then compares it to a hardcoded hash value, yielding a shell if the hashes match. So, if I could get the hashes to match I can use the shell spawned to run l33t and get me to level3. In order to do that, I manipulated the path environment variable to redirect the .secret file read to be from the /var/challenge/level1 directory, which contained the correct value to match the hardcoded hash. So, this caused a shell to be spawned with the egid=2002, so I run l33t and pass the level. In summation, manipulation of the PATH variable was the key to defeating this level. 
+
+
+Level 3: 
+
+Here we have a similar setup to the previous level, I now have access to level2 directory wherein we have an executable with egid=2003 and its uncompiled source code. So, we have a similar structure to solve the problem, if I run l33t with the executables egid I can pass the level. So, I dove into examining the source code. It does a whole lot of redirecting input and output, spawns a child process, and that child will run execlp() on a file called tidy. This execlp() function is the key, it doesn't use an absolute path for the file it executes, thus allowing me an opportunity to run my own version of tidy which I can just make into a script that runs l33t. Script attached below. So, in order to get my version of tidy to run I again have to manipulate the PATH environment variable to search my home directory first before it can go find the actual tidy file. So after creating a script called tidy and putting it in my home directory, I change the path variable to search there first. Now, I can go back to the executable run it with a valid xhtml file I put in my home directory, and it'll run my version of tidy which'll run l33t with egid=2003 giving me lev3 group membership. Boom level 3 done. Key is path manipulation and creating my own version of a file that'll do what I want it to. 
+
+
+#!/bin/sh
+l33t
+  
+
+level 4: 
+
+For this level we have the same setup as before. Executable with setgid one level up and source code to examine the file. Upon examination, I can see the file is running /usr/bin/find /home -iname [command line input]. The file will sanitize my input and not let me do any commands of my own(the sanitation isn't completely correct but it isn't how I broke the level). So, after examining the options for the find command I found the -exec option that will exec any command after a match is found for the file being searched for. So, if I can get it to find a match on a file I can get it to run l33t with egid=2004, giving me access to the next level. So, to do this I first copied a version of l33t into my own home directory. Then I ran ./3 "l33t -exec {} \;" which'll search all home directories for l33t, and when a match is found it'll exec l33t. So, when it makes its way to my directory it finds l33t and runs it with egid=2004, breaking the level. The  syntax of the command line input is as follows: the ""'s are so the program will ignore the spaces and interpret the entire string as a single argument, the l33t is the filename that'll be searched for, the -exec will execute whatever follows it when a match is found, the {}'s will copy the filename that was matched into the arguments that'll to be executed, and the \ is a special character to tell the shell that the next character is supposed to be the end of the executable string, the ; means that the arguments for the exec are complete. So, overall the exploit for this level is command line input manipulation, I was able to use an option for the find command that allowed me to execute any command I want with the privileges of that file. 
+
+
+Level 5:
+
+Same Structure, setgid executable and accompanying source code. The vulnerability here is a ../ attack meaning I can back out of the directory it wants me to execute from into any other directory and run any file I want. I want it to run l33t so I back out of the directory /var/challenge/level4/devil/bin into the /usr/local/bin directory and execute l33t with egid=2005. So, the program expects user input from the command line, builds the path, adds the user input to the end and executes it. So if I run ./4 ../../../../../usr/local/bin/l33t it'll back out all the way, then dive back into where l33t is and runs it effectively giving me level 5 access. 
+
+
+
+Conclusion:
+
+Took me a good amount of effort to figure out, level4 taking the longest as I went down the semicolon attack rabbit hole with no success, but looking more closely at the command it was initially running got me to where I needed to be. Level 5 was the easiest by far, as it took me 10 minutes after I saw what it was doing. A lot of the time taken for me was just wading through the information and picking out the important parts, especially for level3, I spent a while trying to figure out what the program was doing, but eventually I realized all that mattered was if a single line ran(the execlp line). I got some assistance from a grad student, Bashayer Alharbi, when I was stuck. She took the course a few years back, and is working with me on a separate project, so I used her expertise to help me troubleshoot. Overall, I learned a ton from this homework, had a lot of fun, and am ready to attack the next set of levels!!! 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
