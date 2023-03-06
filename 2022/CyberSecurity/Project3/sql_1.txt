@@ -1,0 +1,2 @@
+username: admin
+password: swordfish' UNION SELECT password FROM users WHERE username = 'admin

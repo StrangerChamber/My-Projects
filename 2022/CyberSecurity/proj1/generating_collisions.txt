@@ -1,0 +1,42 @@
+For my first file it took .204 seconds real time, .192 user time, and .009 sys time
+
+
+
+md5_data1 hex is:
+
+698e9248ed28591b44283b3ef969c57e991dca3df0ee18e9447a3b61f694
+223a711e9ff4ce73f8f16b22493922f0518a82049d2327e214ea67cc7a42
+c3e51132a903d57019c0ea068c3ff424b46e0615a656d9365533fe3d28a9
+bc66cefb04ee8daf361fb31229283a6b01328e18ae7ecf1467bd4ece23ab
+d699c464c842f1e5
+
+
+
+md5_data2 hex is:
+
+698e9248ed28591b44283b3ef969c57e991dcabdf0ee18e9447a3b61f694
+223a711e9ff4ce73f8f16b2249392270528a82049d2327e214ea67cc7ac2
+c3e51132a903d57019c0ea068c3ff424b46e0615a656d9b65533fe3d28a9
+bc66cefb04ee8daf361fb31229283a6b01328e98ad7ecf1467bd4ece23ab
+d699c4e4c842f1e5
+
+md5_data1 md5 hash is:
+
+4c3a1a7442025ec42510a1dddbe38d0e
+
+
+md5_data2 md5 hash is:
+
+4c3a1a7442025ec42510a1dddbe38d0e
+
+They are indeed the same MD5 hashes
+
+md5_data1 SHA256 hash is:
+
+dbe471106c039cc6ef66bb273185d1ba3e623c593151961844b85cf84126510d
+
+md5_data2 SHA256 hash is: 
+
+3c81f782cafb3b5b5a5da252b68440cb50dc5e46a22697bb97a6ee88417bb395
+
+They are completely different hash values

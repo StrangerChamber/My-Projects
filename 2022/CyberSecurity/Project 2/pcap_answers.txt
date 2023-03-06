@@ -1,0 +1,65 @@
+1.
+ 
+IP: 10.0.2.1
+MAC: 00:26:08:e5:66:07
+GP: these are used by ISPS so they are most likely huge routers
+
+IP:10.0.2.2
+MAC: 04:0c:ce:d8:0f:fa
+GP: these are used by ISPS so they are most likely huge routers
+
+IP:10.0.2.3
+MAC: 8c:a9:82:50:f0:a6
+GP: these are used by ISPS so they are most likely huge routers
+
+IP: 192.168.1.1
+MAC: 00:26:08:e5:66:07
+GP: These are used and reserved for private IPs not accessible over the internet
+
+
+2)
+a. 
+Ip is 194.109.21.66 the DNS hostname is dl.xs4all.nl
+
+b.
+I can see the keystrokes of the user in plaintext. IE it is not encrypted so if I could MitM the FTP I could attain sensitive data easily. 
+
+c.
+HTTPS and SFTP.
+
+
+
+
+3.
+a.
+www.pnc.com
+
+b.
+They can use a VPN or proxy that gaurantees safe transfer of DNS information.
+
+c.
+36
+
+d.
+TLS 1.0
+
+e.
+VeriSign Trust Network
+
+4.
+a.
+They are using Tlsv1.1 which has known vulnerabilities and uses cypher suites that can be broken such as SHA-1. it also doesn't support newer cypher suites that are required in most places now.
+
+b.
+They could perform a downgrade attack that allows them to impersonate a server and pretend to be a user.
+
+c.
+It can be prevented by using a more up to date version of TLS that uses stronger hashing.
+
+d.
+ 
+What did the user do on Facebook?
+
+They checked the news on al jazeera, on blogspot, usa today, and on new york times
+
+
