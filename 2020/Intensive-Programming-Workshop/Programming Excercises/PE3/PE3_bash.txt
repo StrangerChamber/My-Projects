@@ -1,0 +1,58 @@
+Answer the following questions in a new file titled pe3_bash.txt. Before you start, you may want to see what shell you are using with the command `echo $SHELL`. bash and zsh will be fine for answering these questions. If you have questions about a different shell, please post these on piazza!
+
+What is the bash command to show your terminal's working directory (current location)?
+pwd
+
+How would you create an empty file called empty.txt from the command line?
+touch empty.txt 
+
+Using the ls command, how would you list all files beginning with empty in your current directory?
+ls empty*
+
+Using the ls command, the wc command, and the |, how would you count the number of files ending in .txt in your current directory?
+ls -lR /path/to/dir/*.txt | wc -l
+
+Using the echo command and > or >>, what is the command to write your name to empty.txt?
+echo "jack" > empty.txt
+
+What is the bash command to rename that file to notempty.txt?
+mv empty.txt notempty.txt
+
+What is the bash command to create a directory named pe3_bash?
+mkdir pe3_bash
+
+What is the command to move your terminal's working directory to pe3_bash?
+cd pe3_bash
+
+From the pe3_bash directory, how would you create a new directory, pe3_bash_number2 that has the same parent directory as pe3_bash?
+cd .. 
+mkdir pe3_bash_number2
+
+What is the command to move from pe3_bash to pe3_bash_number2 (use only one command)?
+cd pe3_bash_number2
+
+What does pressing the up arrow key do?
+takes you to previous command
+
+What does pressing the down arrow key do?
+moves down previous commands
+
+What does pressing ctrl+r do?
+reverse i search
+
+What are two different command-line based text editors (text editors that run from the command line and do not open a separate application)? (Answer the following questions for each editor that you have chosen.)
+vim and nano
+
+What command do you use to open a file with this editor?
+vim [file.txt]
+
+What command do you use to save a file while using this editor?
+press Esc key, type :w and hit Enter key.
+
+What command do you use to exit this editor?
+use the :q command and hit [Enter]
+
+What are two reasons you might want to use the text editors listed above?
+it can be a lot faster to just edit your files on the command line rather than running an editor.
+
+It's more efficient as well.

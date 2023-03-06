@@ -1,0 +1,109 @@
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+0
+ X  !  ! 
+ !  !  ! 
+ !  !  ! 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+1
+1
+ X  !  ! 
+ !  O  ! 
+ !  !  ! 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+2
+ X  !  X 
+ !  O  ! 
+ !  !  ! 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+1
+ X  O  X 
+ !  O  ! 
+ !  !  ! 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+2
+1
+ X  O  X 
+ !  O  ! 
+ !  X  ! 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+1
+2
+ X  O  X 
+ !  O  O 
+ !  X  ! 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+1
+0
+ X  O  X 
+ X  O  O 
+ !  X  ! 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+2
+0
+ X  O  X 
+ X  O  O 
+ O  X  ! 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+2
+2
+ X  O  X 
+ X  O  O 
+ O  X  X 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+0
+ O  O  X 
+ X  O  O 
+ O  X  X 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+0
+ X  O  X 
+ X  O  O 
+ O  X  X 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+0
+ O  O  X 
+ X  O  O 
+ O  X  X 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+0
+ X  O  X 
+ X  O  O 
+ O  X  X 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+0
+ O  O  X 
+ X  O  O 
+ O  X  X 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+0
+ X  O  X 
+ X  O  O 
+ O  X  X 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+0
+ O  O  X 
+ X  O  O 
+ O  X  X 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+0
+ X  O  X 
+ X  O  O 
+ O  X  X 
+enter the index of the spot you would like to place an X on one coordinate at a time starting with the x then y
+0
+0
+ O  O  X 
+ X  O  O 
+ O  X  X 
+game over max number of moves has been reached. good bye
