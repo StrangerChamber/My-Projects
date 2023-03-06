@@ -1,0 +1,18 @@
+First things first we examined the html and found a hidden page that was commented out called usage.
+
+From there we could see many other pages that were hidden including an admin page with a login.
+
+We used a sql injection to get past this login screen the command being : username=admin&password=blah') OR 1=1 OR 0=md5(' 
+
+This showed us a page where we could make blog posts and see other blog posts from other users. One of them being a message from jrblack with the hash of ricks password. I went to a hash cracker(https://crackstation.net) and found the password to be iamsolame. So then we went through razor to ssh into rastleys account.
+
+Now we had access to the box, from here we poked around and found mail between jrblack and rastley which included source code to remote.c within jrbalcks home directory, we realized we could use that to to escalate our privilege to jrblacks account. To do that we ran the ./remote and connected from another terminal via nc localhost port# and put /bin/bash across the pipe and then disconnected where remote then execed /bin/bash giving us a terminal with jrblacks access.
+
+From there we viewed jrblacks mail seeing that a cronjob is execed every five minutes in /tmp/Ali-cmd and since we can write to tmp we put a file in there. The file contains
+
+```
+#!/bin/bash
+chmod +r /home/ali/*
+```
+
+Then we were able to access ali’s .bash_history and saw that he entered the root password `EthH@ckingRoot` as a command. 
