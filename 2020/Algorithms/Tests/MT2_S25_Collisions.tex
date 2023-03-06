@@ -1,0 +1,253 @@
+\documentclass[11pt]{article} 
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[siunitx]{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta}
+\usepackage[colorinlistoftodos, color=orange!50]{todonotes}
+\usepackage{hyperref}
+\usepackage[numbers, square]{natbib}
+\usepackage{fancybox}
+\usepackage{epsfig}
+\usepackage{soul}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage[version=4]{mhchem}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{comment}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[numbers]{natbib}
+\usepackage{subfiles}
+\usepackage{tkz-berge}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{cor}{Corollary}[prop]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{definition}
+\newtheorem{required}{Problem}
+
+\theoremstyle{definition}
+\newtheorem{ex}{Example}
+
+\tikzset{
+	vertex/.style={circle,draw,minimum size=16, inner sep=0pt,font=\normalsize},
+	every node/.style={draw=none,rectangle,font=\scriptsize,outer sep=0pt,inner sep=2pt},
+	directed/.style={arrows={-Stealth[length=7pt]},font=\small},
+	caption/.style={text width=6cm,align=center,rectangle,draw}
+}
+
+
+\setlength{\marginparwidth}{3.4cm}
+%#########################################################
+
+%To use symbols for footnotes
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+%To change footnotes back to numbers uncomment the following line
+%\renewcommand*{\thefootnote}{\arabic{footnote}}
+
+% Enable this command to adjust line spacing for inline math equations.
+% \everymath{\displaystyle}
+
+% _______ _____ _______ _      ______ 
+%|__   __|_   _|__   __| |    |  ____|
+%   | |    | |    | |  | |    | |__   
+%   | |    | |    | |  | |    |  __|  
+%   | |   _| |_   | |  | |____| |____ 
+%   |_|  |_____|  |_|  |______|______|
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{
+\normalfont \normalsize 
+\textsc{CSCI 3104 Fall 2021 \\ 
+Instructors: Profs. Grochow and Waggoner} \\
+[10pt] 
+\rule{\linewidth}{0.5pt} \\[6pt] 
+\huge Midterm 2- Standard 26 \\
+\rule{\linewidth}{2pt}  \\[10pt]
+}
+%\author{Your Name}
+\date{}
+
+\begin{document}
+\definecolor {processblue}{cmyk}{0.96,0,0,0}
+\definecolor{processred}{rgb}{200, 0, 0}
+\definecolor{processgreen}{rgb}{0, 255, 0}
+\DeclareGraphicsExtensions{.png}
+\DeclareGraphicsExtensions{.gif}
+\DeclareGraphicsExtensions{.jpg}
+
+\maketitle
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%FILL IN YOUR NAME%%%%%%%
+%%%%%%%%%%AND STUDENT ID%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+Due Date \dotfill TODO \\
+Name \dotfill \textbf{john blackburn} \\
+Student ID \dotfill \textbf{jobl2177} \\
+
+
+\tableofcontents
+
+\section{Instructions}
+ \begin{itemize}
+	\item The solutions \textbf{should be typed}, using proper mathematical notation. We cannot accept hand-written solutions. \href{http://ece.uprm.edu/~caceros/latex/introduction.pdf}{Here's a short intro to \LaTeX.}
+	\item You should submit your work through the \textbf{class Canvas page} only. Please submit one PDF file, compiled using this \LaTeX \ template.
+	\item You may not need a full page for your solutions; pagebreaks are there to help Gradescope automatically find where each problem is. Even if you do not attempt every problem, please submit this document with no fewer pages than the blank template (or Gradescope has issues with it).
+
+	\item You \textbf{may not collaborate with other students}. \textbf{Copying from any source is an Honor Code violation. Furthermore, all submissions must be in your own words and reflect your understanding of the material.} If there is any confusion about this policy, it is your responsibility to clarify before the due date. 
+
+	\item Posting to \textbf{any} service including, but not limited to Chegg, Discord, Reddit, StackExchange, etc., for help on an assignment is a violation of the Honor Code.
+
+	\item You \textbf{must} virtually sign the Honor Code (see Section \ref{HonorCode}). Failure to do so will result in your assignment not being graded.
+\end{itemize}
+
+
+\section{Honor Code (Make Sure to Virtually Sign)} \label{HonorCode}
+
+\begin{required}
+\noindent 
+\begin{itemize}
+\item My submission is in my own words and reflects my understanding of the material.
+\item I have not collaborated with any other person.
+\item I have not posted to external services including, but not limited to Chegg, Discord, Reddit, StackExchange, etc.
+\item I have neither copied nor provided others solutions they can copy.
+\end{itemize}
+
+%\noindent In the specified region below, clearly indicate that you have upheld the Honor Code. Then type your name. 
+\end{required}
+
+\begin{proof}[Agreed (john blackburn).]
+%% Typing "I agree to the above," followed by your name is sufficient.
+\end{proof}
+
+
+\newpage
+\section{Standard 25- Hashing and Collisions}
+\begin{required}
+Consider a hash table designed to store integers, using the hash function $h(k)=k~mod~3$ for all keys $k$ for a table of size 3. (Resolve collisions by chaining with a linked list.) You have three scenarios: 
+\begin{itemize}
+\item Scenario 1: keys are randomly drawn from integers that are divisible by 3.
+
+\item Scenario 2: keys are randomly drawn from integers of the form $3m+1$ where $m$ is an integer.
+
+\item Scenario 3: keys are randomly drawn from \emph{all} integers
+\end{itemize}
+
+
+\noindent \\ Do the following.
+\begin{enumerate}[label=(\alph*)]
+\item For which scenario does the hash function $h(k)$ perform better? Please  {\bf explain/justify} your answer.
+
+
+\begin{proof}[Answer]
+%Your answer here
+Scenario 3 will have the best performance because it will spread the keys far more evenly than the other two scenarios. In scenario 1, if all keys are divisible by 3 that means that when they're plugged into the hash function $h(k)$ they will all get put into the same table slot, because any integer that is divisible by 3 will equal 0 when modulated by 3. A similar scenario follows for scenario 2. Any integer that is multiplied by 3 then has 1 added to it that is then modulated by 3 will always result in 1, so all the keys in this scenario are stored in the same bucket. Scenario 3, however spreads the keys much more evenly throughout the table since all integers are chosen from random.
+\end{proof}
+
+\newpage
+
+\item In each of the three applications, does the hash function $h(k)$ satisfy the uniform hashing property? Please {\bf explain/justify} your answer.
+
+\begin{proof}[Answer]
+%Your answer here
+Scenario 1 does not satisfy the  uniform hashing property because it places all keys into the same bucket rather than spreading them evenly through all buckets. All keys are placed in the bucket at location 0 for the reason that I described in part A. As for scenario 2, It also does not satisfy the uniform hashing property because it also puts all keys in the same bucket as per my description in part A. Scenario 3, does satisfy the uniform hashing property because it fills all the buckets equally and randomly. It chooses keys at random from all integers and modulates those integers by 3 and therefore we will see keys in all the available buckets spreadout randomly and roughly equally.
+\end{proof} 
+
+\newpage
+
+\item Suppose you have $n$ keys in total for each application. What is the resulting load factor for each application?
+
+\begin{proof}[Answer]
+%Your answer here
+Load factor is equivalent to the total keys in our application over the size of our table.
+
+Scenario 1: Since we only have a single table index that is used our actual table size is 1. So the load factor is $n/1 = n$
+
+Scenario 2: We again effectively only have a single table entry ever used so the table size is 1. So the load factor is 
+ $n/1 = n$
+
+Scenario 3: We have a table size of 3 in this case because we do actually use all the table in this case. So the load factor is $(n/3)$.
+\end{proof}
+
+\newpage
+
+\item Suppose you have $n$ keys in total for each application. What are the time complexities of the dictionary operations: add, delete, and find, respectively?
+
+\begin{proof}[Answer]
+%Your answer here
+
+Scenario 1: effectively have a linked list implementation
+
+add: O(1), it will always take O(1) for adding in a hash table even in the worst case.
+
+The delete time is always 1+ load factor, we found load factor above so:
+delete: $O(1+n) = O(n)$
+
+same applies for find
+
+find: $O(1+n) = O(n)$
+
+
+Scenario 2: effectively have a linked list implementation
+
+add: O(1), it will always take O(1) for adding in a hash table even in the worst case.
+
+The delete time is always 1+ load factor, we found load factor above so:
+delete: $O(1+n) = O(n)$
+
+same applies for find
+
+find: $O(1+n) = O(n)$
+
+Scenario 3: keys spread throughout the table
+
+add: O(1), it will always take O(1) for adding in a hash table even in the worst case.
+
+The delete time is always 1+ load factor, we found load factor above so:
+delete: $O(1+n/3)$
+
+same applies for find
+
+find: $O(1+n/3)$
+\end{proof}
+
+\end{enumerate}
+\end{required}
+
+
+
+
+%Include an Image: \includegraphics{ImageFileName}
+%Include an Image and Rotate 90 degree: \includegraphics[angle=90]{ImageFileName}
+%Include an Image, Rotate by 180 degrees, and scale by 50\% \includegraphics[scale=0.5, angle=90]{ImageFileName}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document} % NOTHING AFTER THIS LINE IS PART OF THE DOCUMENT
+
+
+
