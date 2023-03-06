@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="../resources/css/style.css" rel="stylesheet">
+  <title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <div class = "navbar navbar-expand-sm bg-dark navbar-dark fixed-top"> 
+    <!-- Links -->
+    <ul class="navbar-nav">
+      <li id="navHome" class="nav-item">
+        <a class="nav-link" href="./homePage.html">
+          <i class="fa fa-fw fa-home"></i>
+          Home
+        </a>
+      </li>
+      <li id="navTeam" class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fa fa-fw fa-users"></i>
+          Team
+        </a>
+      </li>
+      <li id="navNews" class="nav-item ">
+        <a class="nav-link" href="./news.html">
+          <i class="fa fa-fw fa-search"></i>
+          News
+        </a>
+      </li>
+    </ul>
+    
+    <ul class="navbar-nav ml-auto">
+      <li id="navRegister" class="nav-item">
+        <a class="nav-link" href="./register.html">
+          <i class="fa fa-fw fa-register"></i>
+          Register
+        </a>
+      </li>
+      <li id="navLogin" class="nav-item active">
+        <a class="nav-link" href="./login.html">
+          <i class="fa fa-fw fa-user"></i>
+          Login
+        </a>
+      </li>
+    </ul>
+  </div>
+  <br>
+  <br>
+  <br>
+<h1><b>Login Form</b></h1>
+
+<form action="/action_page.php" method="post">
+  <div class="imgcontainer">
+    <img src="../resources/img/user.png" alt="Avatar" class="avatar">
+  </div>
+
+  <div class="container" style="padding: 16px;">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="uname" required>
+    <br>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+    <br>
+    <label>
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+    <br>
+    <a href="./profile.html">
+      <button class="btn news-page-btn" style="padding: 10px 20px; font-size: 16px;" type="submit">
+        Login
+      </button>
+    </a>
+  </div>
+  <div class="container" style="padding: 16px;">
+    <a href = "./homePage.html">
+      <button type="button" class="btn cancel-btn" >Cancel</button>
+    </a>
+    <br>
+    <span style="float: center">Forgot <a href="#">password?</a></span>
+  </div>
+</form>
+
+
+</html>

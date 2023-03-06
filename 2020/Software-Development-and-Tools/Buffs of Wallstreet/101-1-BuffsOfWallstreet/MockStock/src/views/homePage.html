@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>MockStock - HomePage</title>
+    <link rel='icon' href='../resources/img/favicon.ico' type='image/x-icon'/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link href="../resources/css/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body class="container">
+     
+    <!-- NavBar to match with other .html files goes here-->
+    <div class = "navbar navbar-expand-sm bg-dark navbar-dark fixed-top"> 
+      <!-- Links -->
+      <ul class="navbar-nav">
+        <li id="navHome" class="nav-item active">
+          <a class="nav-link" href="./homePage.html">
+            <i class="fa fa-fw fa-home"></i>
+            Home
+          </a>
+        </li>
+        <li id="navTeam" class="nav-item">
+          <a class="nav-link" href="./team.html">
+            <i class="fa fa-fw fa-users"></i>
+            Team
+          </a>
+        </li>
+        <li id="navNews" class="nav-item">
+          <a class="nav-link" href="./news.html">
+            <i class="fa fa-fw fa-search"></i>
+            News
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="navbar-nav ml-auto">
+        <li id="navTrades" class="nav-item">
+          <a class="nav-link" href="./trade.html">
+            <i class="fa fa-fw fa-register"></i>
+            Trades
+          </a>
+        </li>
+        <li id="navProfile" class="nav-item">
+          <a class="nav-link" href="./profile.html">
+            <i class="fa fa-fw fa-user"></i>
+            Profile
+          </a>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <br>
+    <br>
+    <h1><b>Welcome to MockStock</b></h1>
+    <h2> We provide a competitive, risk-free introduction to investing for all.</h2>
+    
+    <div class="slideshow-container">
+     <div class="changeSlides fade">
+      <img src="../resources/img/image_1.jpg" style="width:100%">
+      <div class="text">We provide a competitive, risk-free introduction to investing for all.<br>For Business students, or anybody that is interested in the stock market but intimidated by it. We want our consumers to see our application as a risk free tool to learn about the stock market.</div>
+    </div>
+    <div class="changeSlides fade">
+      <img src="../resources/img/image_2.jpg" style="width:100%">
+      <div class="text">Our Website will allow you to learn the basics of the stock market without having to risk anything while getting real experience at the same time. You will be able to make different profiles so you can invest in different ways and see which profile will have the best performance.   </div>
+    </div>
+    <div class="changeSlides fade">
+      <img src="../resources/img/image_3.jpg" style="width:100%" height="800px">
+      <div class="text">MockStock is a trading website that gives you the ability to learn to trade stocks risk free, and allows you to interact with the stock market without actually entering any of your own money</div>
+    </div>
+  </div>
+  <br>
+  <br>
+    <div style="text-align:center">
+      <span class="dot"></span> 
+      <span class="dot"></span> 
+      <span class="dot"></span>
+    </div> 
+    <script>
+        var slideIndex = 0;
+        showSlides();
+        function showSlides() {
+          var i;
+          var slides = document.getElementsByClassName("changeSlides");
+          var dots = document.getElementsByClassName("dot");
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+          }
+          slideIndex++;
+          if (slideIndex > slides.length) {slideIndex = 1}    
+            for (i = 0; i < dots.length; i++) {
+              dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+            setTimeout(showSlides, 9000); // Change image every 9 seconds
+          };
+      </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="../resources/js/scripts.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>MockStock - News</title>
+    <link rel='icon' href='../resources/img/favicon.ico' type='image/x-icon'/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../resources/css/style.css" rel="stylesheet">
+  </head>
+  <body onload="loadNewsPage()">
+    <!-- NavBar to match with other .html files goes here-->
+    <div class = "navbar navbar-expand-sm bg-dark navbar-dark fixed-top"> 
+      <!-- Links -->
+      <ul class="navbar-nav">
+        <li id="navHome" class="nav-item">
+          <a class="nav-link" href="./homePage.html">
+            <i class="fa fa-fw fa-home"></i>
+            Home
+          </a>
+        </li>
+        <li id="navTeam" class="nav-item">
+          <a class="nav-link" href="team.html">
+            <i class="fa fa-fw fa-users"></i>
+            Team
+          </a>
+        </li>
+        <li id="navNews" class="nav-item active">
+          <a class="nav-link" href="./news.html">
+            <i class="fa fa-fw fa-search"></i>
+            News
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="navbar-nav ml-auto">
+        <li id="navRegister" class="nav-item">
+          <a class="nav-link" href="./trade.html">
+            <i class="fa fa-fw fa-register"></i>
+            Trades
+          </a>
+        </li>
+        <li id="navLogin" class="nav-item">
+          <a class="nav-link" href="./profile.html">
+            <i class="fa fa-fw fa-user"></i>
+            Profile
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!--
+      Use API to generate news response. A sample response (of a SINGLE element) is below:
+      {
+      "category": "company news",
+      "datetime": 1569550360,
+      "headline": "More sops needed to boost electronic manufacturing: Top govt official More sops needed to boost electronic manufacturing: Top govt official.
+                   More sops needed to boost electronic manufacturing: Top govt official More sops needed to boost electronic manufacturing: Top govt official", 
+      "id": 25286,
+      "image": "https://img.etimg.com/thumb/msid-71321314,width-1070,height-580,imgsize-481831,overlay-economictimes/photo.jpg",
+      "related": "AAPL",
+      "source": "The Economic Times India",
+      "summary": "NEW DELHI | CHENNAI: India may have to offer electronic manufacturers additional sops such as cheap credit and incentives for export along with infrastructure support in order 
+                  to boost production and help the sector compete with China, Vietnam and Thailand, according to a top government official.These incentives, over and above the proposed reduction 
+                  of corporate tax to 15% for new manufacturing units, are vital for India to successfully attract companies looking to relocate manufacturing facilities.“While the tax announcements 
+                  made last week send a very good signal, in order to help attract investments, we will need additional initiatives,” the official told ET, pointing out that Indian electronic manufacturers 
+                  incur 8-10% higher costs compared with other Asian countries.Sops that are similar to the incentives for export under the existing Merchandise Exports from India Scheme (MEIS) 
+                  are what the industry requires, the person said.MEIS gives tax credit in the range of 2-5%. An interest subvention scheme for cheaper loans and a credit guarantee scheme for plant and machinery 
+                  are some other possible measures that will help the industry, the official added.“This should be 2.0 (second) version of the electronic manufacturing cluster (EMC) scheme, which is aimed at 
+                  creating an ecosystem with an anchor company plus its suppliers to operate in the same area,” he said.Last week, finance minister Nirmala Sitharaman announced a series of measures to boost 
+                  economic growth including a scheme allowing any new manufacturing company incorporated on or after October 1, to pay income tax at 15% provided the company does not avail of any other exemption or incentives.",
+      "url": "https://economictimes.indiatimes.com/industry/cons-products/electronics/more-sops-needed-to-boost-electronic-manufacturing-top-govt-official/articleshow/71321308.cms"
+      }
+      Buttons to display different pages of news, 9 articles per page
+      Each page has the exact same layout. How we change between pages is all through javascript and the Finnhub API news response.
+    -->
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container news-container">
+      <div class="card-deck">
+        <div class="card text-white bg-dark mb-3" id="art1">
+          <a id="art1URL" href="#">
+            <img class="card-img-top" id="art1Img" src="..." alt="News Headline 1 Image">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title" id="art1Title">News Headline 1</h5>
+            <p class="card-text" id="art1Summary">Summary of Article 1</p>
+            <p class="card-text">
+              <small class="text-muted" id="art1Time">
+              </small>
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" id="art2">
+          <a id="art2URL" href="#"> 
+            <img class="card-img-top" id="art2Img" src="..." alt="News Headline 2 Image">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title" id="art2Title">News Headline 2</h5>
+            <p class="card-text" id="art2Summary">Summary of Article 2</p>
+            <p class="card-text">
+              <small class="text-muted" id="art2Time">
+                Last updated (datetime) days ago
+              </small>
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" id="art3">
+          <a id="art3URL" href="#">
+            <img class="card-img-top" id="art3Img" src="..." alt="News Headline 3 Image">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title" id="art3Title">News Headline 3</h5>
+            <p class="card-text" id="art3Summary">Summary of Article 3</p>
+            <p class="card-text">
+              <small class="text-muted" id="art3Time">
+                Last updated (datetime) days ago 
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="card-deck">
+        <div class="card text-white bg-dark mb-3" id="art4">
+          <a id="art4URL" href="#"> 
+            <img class="card-img-top" id="art4Img" src="..." alt="News Headline 4 Image"> 
+          </a>
+          <div class="card-body">
+            <h5 class="card-title" id="art4Title">News Headline 4</h5>
+            <p class="card-text" id="art4Summary">Summary of Article 4</p>
+            <p class="card-text">
+              <small class="text-muted" id="art4Time">
+                Last updated (datetime) days ago
+              </small>
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" id="art5">
+          <a id="art5URL" href="#">
+            <img class="card-img-top" id="art5Img" src="..." alt="News Headline 5 Image">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title" id="art5Title">News Headline 5</h5> 
+            <p class="card-text" id="art5Summary">Summary of Article 5</p>
+            <p class="card-text">
+              <small class="text-muted" id="art5Time">
+                Last updated (datetime) days ago 
+              </small>
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" id="art6">
+          <a id="art6URL" href="#">
+            <img class="card-img-top" id="art6Img" src="..." alt="News Headline 6 Image">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title" id="art6Title">News Headline 6</h5>
+            <p class="card-text" id="art6Summary">Summary of Article 6</p>
+            <p class="card-text">
+              <small class="text-muted" id="art6Time">
+                Last updated (datetime) days ago
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="card-deck">
+        <div class="card text-white bg-dark mb-3" id="art7">
+          <a id="art7URL" href="#">
+            <img class="card-img-top" id="art7Img" src="..." alt="News Headline 7 Image">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title" id="art7Title">News Headline 7</h5>
+            <p class="card-text" id="art7Summary">Summary of Article 7</p>
+            <p class="card-text">
+              <small class="text-muted" id="art7Time">
+                Last updated (datetime) days ago
+              </small>
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" id="art8">
+          <a id="art8URL" href="#">
+            <img class="card-img-top" id="art8Img" src="..." alt="News Headline 8 Image">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title" id="art8Title">News Headline 8</h5>
+            <p class="card-text" id="art8Summary">Summary of Article 8</p>
+            <p class="card-text">
+              <small class="text-muted" id="art8Time">
+                Last updated (datetime) days ago
+              </small>
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" id="art9">
+          <a id="art9URL" href="#">
+            <img class="card-img-top" id="art9Img" src="..." alt="News Headline 9 Image">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title" id="art9Title">News Headline 9</h5>
+            <p class="card-text" id="art9Summary">Summary of Article 9</p>
+            <p class="card-text">
+              <small class="text-muted" id="art9Time">
+                Last updated (datetime) days ago
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="../resources/js/scripts.js"></script>
+    <script src="../resources/js/api_scripts.js"></script>
+    <!-- Footer NavBar for user to change news page -->
+    <div class = "navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom"> 
+      <div class="mx-auto order-0">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">
+              Select Page:
+            </a>
+          </li>
+          <li class="nav-item-btn">
+            <button type="button" class="news-page-btn" onclick="changeNewsPage(0)">
+              1
+            </button>
+          </li>
+          <li class="nav-item-btn">
+            <button type="button" class="news-page-btn" onclick="changeNewsPage(1)"> 
+              2
+            </button>
+          </li>
+          <li class="nav-item-btn">
+            <button type="button" class="news-page-btn" onclick="changeNewsPage(2)">
+              3
+            </button>
+          </li>
+          <li class="nav-item-btn">
+            <button type="button" class="news-page-btn" onclick="changeNewsPage(3)">
+              4
+            </button>
+          </li>
+          <li class="nav-item-btn">
+            <button type="button" class="news-page-btn" onclick="changeNewsPage(4)">
+              5
+            </button>
+          </li>
+          <li class="nav-item-btn">
+            <button type="button" class="news-page-btn" onclick="changeNewsPage(5)">
+              6
+            </button>
+          </li>
+          <li class="nav-item-btn">
+            <button type="button" class="news-page-btn" onclick="changeNewsPage(6)">
+              7
+            </button>
+          </li>
+          <li class="nav-item-btn">
+            <button type="button" class="news-page-btn" onclick="changeNewsPage(7)">
+              8
+            </button>
+          </li>
+          <li class="nav-item-btn">
+            <button type="button" class="news-page-btn" onclick="changeNewsPage(8)">
+              9
+            </button>
+          </li>
+          <li class="nav-item-btn">
+            <button type="button" class="news-page-btn" onclick="changeNewsPage(9)">
+              10
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

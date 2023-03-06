@@ -1,0 +1,115 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Trade</title> <!-- Change Profile to $userName -->
+    <link rel='icon' href='../resources/img/favicon.ico' type='image/x-icon'/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../resources/css/style.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class = "navbar navbar-expand-sm bg-dark navbar-dark fixed-top"> 
+      <!-- Links -->
+      <ul class="navbar-nav">
+        <li id="navHome" class="nav-item">
+          <a class="nav-link" href="./homePage.html">
+            <i class="fa fa-fw fa-home"></i>
+            Home
+          </a>
+        </li>
+        <li id="navTeam" class="nav-item">
+          <a class="nav-link" href="team.html">
+            <i class="fa fa-fw fa-users"></i>
+            Team
+          </a>
+        </li>
+        <li id="navNews" class="nav-item">
+          <a class="nav-link" href="./news.html">
+            <i class="fa fa-fw fa-search"></i>
+            News
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="navbar-nav ml-auto">
+        <li id="navRegister" class="nav-item active">
+          <a class="nav-link" href="./trade.html">
+            <i class="fa fa-fw fa-register"></i>
+            Trades
+          </a>
+        </li>
+        <li id="navLogin" class="nav-item">
+          <a class="nav-link" href="./profile.html">
+            <i class="fa fa-fw fa-user"></i>
+            Profile
+          </a>
+        </li>
+      </ul>
+    </div>
+  <br>
+  <br>
+    <div class ="jumbotron" style="background-image: url('https://techstocktrading.com/wp-content/uploads/2018/10/stockmarket-740x410.jpg'); 
+  background-size: cover; 
+  background-repeat: no-repeat; ">
+    
+      <h2 style="color: white;">Welcome to the Marketplace!</h2>
+
+      <p class="text-center text-white">On this page is where you will make transactions happen. Make sure to fill out the form below with the correct information.</p>
+    </div>
+
+    <div class="container" style="width: 30%;">
+     
+      <fieldset class="form-group">
+        <div class="row">
+          <p>Are you buying or selling?</p>
+          <div class="col-sm-10">
+          <div class="form-check">
+            <input class="form-check-input" onclick="showHide(0)" type="radio" name="buyOrSell" id="selectBuy" value="Buy" required>
+            <label class="form-check-label" for="buyOrSell">
+            Buy
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" onclick="showHide(1)" type="radio" name="buyOrSell" id="selectSell" value="Sell">
+            <label class="form-check-label" for="buyOrSell">
+            Sell
+            </label>
+          </div>
+          </div>
+        </div>
+      </fieldset>
+     </div>
+
+     <div class= "container">
+      <form name="enterInfo" id="enterInfo" data-toggle="validator">
+          <div class="row ml-1">
+            <div>
+              <label for="ticker">Enter the company ticker symbol</label>
+            </div>
+            <div class="ml-auto mr-3">
+              <input type="text" class="form-control" id="ticker" placeholder="e.g. 'AAPL'" required>
+            </div>
+          </div>
+          <div class="row ml-1">
+            <div>
+              <label for="ticker">Enter the amount</label>
+            </div>
+            <div class="ml-auto mr-3">
+              <input type="text" class="form-control" id="qty" placeholder="e.g. 3" required>
+            </div>
+          </div>
+        </form>
+        <input id= "submitTrade" type="submit" class="btn news-page-btn" style="font-size: 16px;" value="Submit" onclick="update()">
+        <br>
+      </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="../resources/js/scripts.js"></script>
+  </body>
+</html>

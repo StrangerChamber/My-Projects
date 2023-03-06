@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+This is the first line of a file WITH SOME DIFFERENT TEXT!!!!
+=======
+This is the first line of a file with some added text.
+>>>>>>> e645b17d4cc57dc2564cb328a455991e3322cfb0

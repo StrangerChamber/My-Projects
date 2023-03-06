@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>MockStock - News</title>
+    <link rel='icon' href='../resources/img/favicon.ico' type='image/x-icon'/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../resources/css/style.css" rel="stylesheet">
+  </head>
+  <body onload="addRows()" >
+  <div class = "navbar navbar-expand-sm bg-dark navbar-dark fixed-top"> 
+      <!-- Links -->
+      <ul class="navbar-nav">
+        <li id="navHome" class="nav-item">
+          <a class="nav-link" href="./homePage.html">
+            <i class="fa fa-fw fa-home"></i>
+            Home
+          </a>
+        </li>
+        <li id="navTeam" class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-users"></i>
+            Team
+          </a>
+        </li>
+        <li id="navNews" class="nav-item">
+          <a class="nav-link" href="./news.html">
+            <i class="fa fa-fw fa-search"></i>
+            News
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="navbar-nav ml-auto">
+        <li id="navRegister" class="nav-item">
+          <a class="nav-link" href="./trade.html">
+            <i class="fa fa-fw fa-register"></i>
+            Trade
+          </a>
+        </li>
+        <li id="navLogin" class="nav-item active">
+          <a class="nav-link" href="./profile.html">
+            <i class="fa fa-fw fa-user"></i>
+            Profile
+          </a>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class= "container">
+      <h1 class = "text-center">Account Profile</h1>
+    </div>
+
+    
+    <!-- This section will be a chart to track's user's gains/losses -->
+    <div class ="jumbotron" style="background-image: url('https://www.thebalance.com/thmb/Z1d52oJkT2Hn8VHTc27KWFFO8OM=/2121x1193/smart/filters:no_upscale()/2020_Stk_Mkt_Crash_GettyImages-169975453-9914431a81f14c9aaf1a8dcbeafeaffb.jpg'); 
+  background-size: cover; 
+  background-repeat: no-repeat; ">
+    
+      <h2 class="text-center" style="color: white;">Check your positions here</h2>
+
+    </div>
+
+    <a href="./trade.html" class="btn news-page-btn" style="padding: 10px 20px; font-size: 16px; display: inline-block;" role="button">Click here to trade</a>
+
+    <br>
+    <br>
+    <div class= "container">
+        <h2 class = "text-center">Positions</h2>
+
+        <table class="table table-striped table-dark"  id = "Positions"  >
+          <thead>
+              <tr>
+                  <th>Company Symbol</th>
+                  <th>QTY</th>
+                  <th>Price Paid</th>
+                  <th>Market Value</th>
+                  <th>Profit Loss/Gain</th>
+              </tr>
+          </thead>
+          <tbody>          
+          </tbody>
+        </table>
+
+
+      </div>
+
+      <a href="./trade.html" class="btn news-page-btn" style="padding: 10px 20px; font-size: 16px; display: inline-block;" role="button">Click here to trade</a>
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="../resources/js/scripts.js"></script>
+  </body>
+</html>
