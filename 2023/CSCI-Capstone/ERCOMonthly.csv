@@ -1,0 +1,13 @@
+month,consumed_co2_rate_lb_per_mwh_for_electricity,consumed_ch4_rate_lb_per_mwh_for_electricity,consumed_n2o_rate_lb_per_mwh_for_electricity,consumed_co2e_rate_lb_per_mwh_for_electricity,consumed_nox_rate_lb_per_mwh_for_electricity,consumed_so2_rate_lb_per_mwh_for_electricity,consumed_co2_rate_lb_per_mwh_for_electricity_adjusted,consumed_ch4_rate_lb_per_mwh_for_electricity_adjusted,consumed_n2o_rate_lb_per_mwh_for_electricity_adjusted,consumed_co2e_rate_lb_per_mwh_for_electricity_adjusted,consumed_nox_rate_lb_per_mwh_for_electricity_adjusted,consumed_so2_rate_lb_per_mwh_for_electricity_adjusted
+1,812.21,0.0593,0.00834,816.14,0.467,0.554,811.48,0.0593,0.00834,815.41,0.467,0.554
+2,853.89,0.0562,0.00781,857.59,0.599,0.772,853.24,0.0562,0.00781,856.94,0.599,0.772
+3,612.19,0.0419,0.00585,614.95,0.396,0.465,611.28,0.0419,0.00585,614.05,0.396,0.465
+4,726.28,0.0487,0.00679,729.5,0.468,0.582,725.55,0.0487,0.00679,728.76,0.468,0.582
+5,742.41,0.0516,0.00722,745.82,0.408,0.516,741.83,0.0516,0.00722,745.24,0.407,0.516
+6,897.95,0.06,0.00835,901.91,0.504,0.682,895.74,0.06,0.00835,899.69,0.504,0.682
+7,940.82,0.0626,0.00867,944.93,0.518,0.684,932.7,0.0626,0.00867,936.81,0.518,0.684
+8,892.95,0.0579,0.00798,896.75,0.491,0.631,884.96,0.0579,0.00798,888.75,0.491,0.631
+9,862.41,0.0575,0.00795,866.19,0.488,0.606,854.58,0.0574,0.00795,858.35,0.488,0.606
+10,817.49,0.0548,0.00761,821.09,0.495,0.517,812.78,0.0548,0.00761,816.39,0.495,0.517
+11,778.25,0.0557,0.00782,781.94,0.507,0.52,777.43,0.0557,0.00782,781.12,0.506,0.52
+12,704.61,0.0498,0.00698,707.91,0.433,0.459,703.83,0.0498,0.00698,707.13,0.432,0.459
