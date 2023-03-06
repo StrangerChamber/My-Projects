@@ -1,0 +1,11 @@
+enclave {
+    untrusted { 
+    //NEED TO FIGURE OUT HOW THE PARAMS HERE WORK
+    };
+    trusted {
+        //function to calculate a sum 
+        public int addNumbersEcall();
+        
+    };
+
+};
