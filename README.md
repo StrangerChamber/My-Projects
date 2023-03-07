@@ -1,1 +1,1 @@
-This Repo is all the projects that I completed while at CU
+This Repo is all the projects and coursework that I completed while at CU. Organized by year and course. I didn't save all my work throughout my time at CU but saved the vast majority of it here in this repo. 
